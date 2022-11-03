@@ -1,20 +1,27 @@
-print("Hello BarCode")
-
-from flask import Flask, render_template, request
+import os
+from flask import Flask, request
+from mongo import DB
 
 app = Flask(__name__)
+db = DB(os.getenv("MONGO_CONN_STRING"))
+db.get_database()
 
 @app.route("/")
 def index():
   return "Hello"
 
-@app.route("/submit", methods=["GET", "POST"])
+@app.route("barpost/{postid}/{price}", methods=["GET", "POST"])
 def submit():
   if request.method == "GET":
-    return "<h1> _id = 123 <br/> Name = Soap <br/> Price = 1200 </h1>"
+      return db.get_items()
   elif request.method == "POST":
     text = request.get_json()
-    return text
+    db.insert_items(text)
+    return 
+
+@app.route("barget", methods=["GET"])
+def barget():
+    return 
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)

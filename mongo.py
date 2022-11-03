@@ -1,9 +1,13 @@
 from pymongo import MongoClient
 
+
 class DB:
+    def __init__(connection_string):
+        self.connection_string = connection_string
+
     
     def get_database():
-        CONNECTION_STRING = "<todo>"
+        CONNECTION_STRING = self.connection_string
 
         client = MongoClient(CONNECTION_STRING)
         barcode = client['barcode']
@@ -14,11 +18,11 @@ class DB:
         return self.find({"_id": id})
 
     def insert_items(self, items):
-        if items.len < 1:
-            return
+        try:
+            else if items.len <2:
+                 self.insert_one(items)
 
-        else if items.len <2:
-            self.insert_one(items)
-
-        else :
-            self.insert_many(items)
+            else :
+                self.insert_many(items)
+        except:
+            return 404
