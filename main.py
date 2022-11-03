@@ -10,10 +10,10 @@ def index():
 
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
-  if request.method == "GET": # if form method is GET
+  if request.method == "GET":
     text = request.args["text"]
     return text
-  elif request.method == "POST": # if form method is POST
+  elif request.method == "POST":
     text = request.form["text"]
     return text
 
